@@ -1,0 +1,24 @@
+{
+  "manifest_version": 2,
+
+  "name": "Tab Time Counter",
+  "description": "This extension allow user to track time passed on every website",
+  "version": "1.0",
+
+  "browser_action": {
+    "default_icon": "icon.png",
+    "default_popup": "popup.html"
+  },
+  "background": {
+      "scripts": ["eventPage.js"]
+  },
+  "permissions": [
+    "activeTab",
+    "https://ajax.googleapis.com/",
+    "https://cdnjs.cloudflare.com/",
+    "background",
+    "tabs",
+    "storage"
+  ],
+  "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'"
+}
