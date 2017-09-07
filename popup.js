@@ -1,6 +1,4 @@
-// Copyright (c) 2014 The Chromium Authors. All rights reserved.
-// Use of this source code is governed by a BSD-style license that can be
-// found in the LICENSE file.
+
 /*
   color code generator
 */
@@ -13,6 +11,27 @@ function getRandomColor() {
     return color;
 }
 
+
+/* fancy Time format*/
+//src: https://stackoverflow.com/questions/3733227/javascript-seconds-to-minutes-and-seconds
+function fancyTimeFormat(time)
+{   
+    // Hours, minutes and seconds
+    var hrs = ~~(time / 3600);
+    var mins = ~~((time % 3600) / 60);
+    var secs = time % 60;
+
+    // Output like "1:01" or "4:03:59" or "123:03:59"
+    var ret = "";
+
+    if (hrs > 0) {
+        ret += "" + hrs + ":" + (mins < 10 ? "0" : "");
+    }
+
+    ret += "" + mins + ":" + (secs < 10 ? "0" : "");
+    ret += "" + secs;
+    return ret;
+}
 
 /**
  * Get the current URL.
@@ -158,21 +177,32 @@ document.addEventListener('DOMContentLoaded', function() {
     animateScale : false,
 
     //String - A legend template
-    legendTemplate : "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<segments.length; i++){%><li><span style=\"background-color:<%=segments[i].fillColor%>\"></span><%if(segments[i].label){%><%=segments[i].label%><%}%></li><%}%></ul>"
+    //legendTemplate : "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<segments.length; i++){%><li><span style=\"background-color:<%=segments[i].fillColor%>\"></span><%if(segments[i].label){%><%=segments[i].label%><%}%></li><%}%></ul>",
+    legend: {
+            display: true,
+            labels: {
+                fontColor: 'rgb(255, 99, 132)'
+            }
+        }
 
-};
+
+  };
   var pureData = response;
   
   var data = [];
-  console.log(pureData);
+  
   for (var prop in pureData)
   {
 
     if (pureData.hasOwnProperty(prop))
     {
-      data.push({value:pureData[prop],
+      //convert to readable date
+
+      data.push({
+                 
+                value:pureData[prop],
                 color: getRandomColor(),
-                label:prop,
+                label:prop + "  " + fancyTimeFormat(pureData[prop]),
                 highlight: getRandomColor()});
     }
   }
@@ -180,6 +210,8 @@ document.addEventListener('DOMContentLoaded', function() {
   var myPieChart = new Chart(ctx).Pie(data,options);
 
     });
+
+  //create legend
   /*for(var i =0;localStore.length;++i)
   {
     mylist.createElement("li")

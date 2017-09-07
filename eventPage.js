@@ -16,7 +16,7 @@ var LocalStorage = (function(){
     var __d = _getHostName(keyvalue.url);
     var __v =  _storage[__d];
     if(typeof __v === "undefined") _storage[__d] = 0;
-    _storage[__d]+=3;
+    _storage[__d]+=3; //add 3 seconds
   };
   var _getInternal = function(){return _storage;};
 
@@ -32,7 +32,7 @@ setInterval(function(){
       
       chrome.tabs.query(queryInfo, function(tabs) {
 
-       var tabObj = tabs[0];
+       var tabObj = tabs[0]; //current tab
 
         if(tabObj && tabObj.url)
         {
@@ -40,7 +40,6 @@ setInterval(function(){
            var tmpObj = {'url': tabObj.url
                    };
             LocalStorage.add(tmpObj);
-            console.log(tmpObj);
         }
         
       });
